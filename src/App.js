@@ -1,19 +1,23 @@
 import React, {Component} from 'react';
 import Particles from "react-tsparticles";
 import { loadFull } from "tsparticles";
+import Clarifai from 'clarifai';
 import Navigation from './components/Navigation/Navigation';
+import FaceRecognition from './components/FaceRecognition/FaceRecognition';
 import Logo from './components/Logo/Logo';
 import ImagesLinkedForm from './components/ImagesLinkedForm/ImagesLinkedForm';
 import Rank from './components/Rank/Rank';
 import './App.css';
 
+//const Clarifai = require('clarifai');
+
+const app = new Clarifai.App({
+ apiKey: '706412e851f14aed9c5e5d1829dc812a'
+});
+
 // setting up Particles NPM
 const particlesInit = async (main) => {
   console.log(main);
-
-  // you can initialize the tsParticles instance (main) here, adding custom shapes or presets
-  // this loads the tsparticles package bundle, it's the easiest method for getting everything ready
-  // starting from v2 you can add only the features you need reducing the bundle size
   await loadFull(main);
 };
 
@@ -23,6 +27,33 @@ const particlesLoaded = (container) => {
 
 // Rendering App
 class App extends Component {
+  constructor() {
+    super();
+    this.state = {
+      input: '',
+    }
+  }
+
+  onInputChange = (event) => {
+    console.log(event.target.value);
+  }
+
+  onButtonSubmit = () => {
+    console.log('click');
+    app.models.predict(
+      Clarifai.COLOR_MODEL,
+      "https://samples.clarifai.com/face-det.jpg")
+    .then(
+      function(response) {
+        console.log(response);
+      },
+      function(err) {
+
+      }
+    );
+  }
+
+
   render() {
     return (
       <div className="App">
@@ -100,10 +131,9 @@ class App extends Component {
         />
         <Navigation/>
         <Logo />
-        <Rank />
-        <ImagesLinkedForm onInputChange={this.onInputChange}/>
-        {/* <FaceRecognition />
-        */}
+        <Rank /> 
+        <ImagesLinkedForm onInputChange={this.onInputChange} onButtonSubmit = {this.onButtonSubmit}/>
+        <FaceRecognition />
       </div> 
     );
   }
