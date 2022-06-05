@@ -1,6 +1,6 @@
 # FaceX (Face Recognition App) 🤖
 
-FaceX provides a simple way for detecting faces in pictures on the internet. The application is hosted on Vercel [here](https://the-face-recognition-app.vercel.app/) and makes use of the [Clarifai API](https://clarifai.com/).
+FaceX provides a simple way for detecting faces in pictures on the internet, and marks them with a blue box around them. The application is hosted on Vercel [here](https://the-face-recognition-app.vercel.app/) and makes use of the [Clarifai API](https://clarifai.com/).
 
 Built Summer 2022.
 
